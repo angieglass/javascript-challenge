@@ -44,7 +44,8 @@ datetimeForm.on("submit", runFilter);
 function runFilter(){
     d3.event.preventDefault();
     var inputDatetime = datetimeForm.property("value"); 
-console.log(inputDatetime);
-console.log(tableData);
+    var filteredDate = tableData.filter(date => date.datetime === inputDatetime);
+
+    console.log(filteredDate);
 }
 
