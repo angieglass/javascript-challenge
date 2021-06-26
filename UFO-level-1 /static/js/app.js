@@ -12,12 +12,22 @@ var tbody = d3.select("tbody");
 // tableData.forEach(element => console.log(element)); 
 
 // 2.- For each element in the array, we add a table row. 
-// Then we add the value on a cell 
+// Then we add the value on a cell with "value"
 
 tableData.forEach((element) => {
     var row = tbody.append("tr");
-    Object.entries(element).forEach(([key,value]) =>{
+    Object.entries(element).forEach(([key,value]) => {
         row.append("td").text(value);
     })
 });
+
+// Event listener for the filter table 
+
+var ftrTableBtn = d3.select("#filter-btn");
+function filterTableButton(){
+    console.log("Filter table clicked")
+    console.log(d3.event.target);
+}
+
+ftrTableBtn.on("click", filterTableButton);
 
