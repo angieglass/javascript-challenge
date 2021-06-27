@@ -29,15 +29,10 @@ var ftrTableBtn = d3.select("#filter-btn");
 
 // Select the forms 
 var datetimeForm = d3.select("#datetime");
-var cityForm = d3.select("#city");
-var stateForm = d3.select("#state");
-var countryForm = d3.select("#country");
-var shapeForm = d3.select("#shape");
 
 // Create event handlers
 ftrTableBtn.on("click", runFilter);
 datetimeForm.on("submit", runFilter);
-
 
 // ----------------------------------------------------
 //Event handler function to filter data 
@@ -45,7 +40,14 @@ function runFilter(){
     d3.event.preventDefault();
     var inputDatetime = datetimeForm.property("value"); 
     var filteredDate = tableData.filter(date => date.datetime === inputDatetime);
-
     console.log(filteredDate);
-}
-
+    tbody.html("");
+    filteredDate.forEach((element) => {
+        var row = tbody.append("tr");
+        Object.entries(element).forEach(([key,value]) => {
+            row.append("td").text(value);
+        })
+    });
+    
+    
+  }
