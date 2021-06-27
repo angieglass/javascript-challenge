@@ -1,4 +1,5 @@
-// from data.js
+
+  // from data.js
 var tableData = data;
 // Get a reference to the table body
 var tbody = d3.select("tbody");
@@ -29,21 +30,46 @@ var ftrTableBtn = d3.select("#filter-btn");
 
 // Select the forms 
 var datetimeForm = d3.select("#datetime");
+var cityForm = d3.select("#city");
+var stateForm = d3.select("#state");
+var countryForm = d3.select("#country");
+var shapeForm = d3.select("#shape");
+
+
 
 // Create event handlers
 ftrTableBtn.on("click", runFilter);
 datetimeForm.on("submit", runFilter);
+cityForm.on("submit", runFilter);
+stateForm.on("submit", runFilter);
+countryForm.on("submit", runFilter);
+shapeForm.on("submit", runFilter);
 
 // ----------------------------------------------------
 //Event handler function to filter data 
 function runFilter(){
     d3.event.preventDefault();
     var inputDatetime = datetimeForm.property("value"); 
-    var filteredDate = tableData.filter(date => date.datetime === inputDatetime);
-    console.log(filteredDate);
+    var inputCity = cityForm.property("value"); 
+    var inputState = stateForm.property("value"); 
+    var inputCountry = countryForm.property("value"); 
+    var inputShape = shapeForm.property("value"); 
+
+
+    var filteredData = tableData.filter(date => 
+        date.datetime === inputDatetime &&
+        (date.city === inputCity ||
+        date.state === inputState ||
+        date.country === inputCountry ||
+        date.shape === inputShape)
+        );
+    console.log(filteredData);
+
+    // Rewriting the table to show the next filters applied 
     tbody.html("");
 
-    filteredDate.forEach(function(element) {
+    
+    filteredData.forEach(function(element) {
         var row = tbody.append("tr");
         Object.entries(element).forEach(([key,value]) => {
             row.append("td").text(value);
@@ -52,4 +78,3 @@ function runFilter(){
     
     
   }
-
