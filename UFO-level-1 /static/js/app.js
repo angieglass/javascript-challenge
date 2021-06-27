@@ -42,7 +42,8 @@ function runFilter(){
     var filteredDate = tableData.filter(date => date.datetime === inputDatetime);
     console.log(filteredDate);
     tbody.html("");
-    filteredDate.forEach((element) => {
+
+    filteredDate.forEach(function(element) {
         var row = tbody.append("tr");
         Object.entries(element).forEach(([key,value]) => {
             row.append("td").text(value);
