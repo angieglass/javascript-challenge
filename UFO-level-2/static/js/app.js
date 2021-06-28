@@ -27,6 +27,7 @@ tableData.forEach((element) => {
 // ----------------------------------------------------
 // Select the filter button
 var ftrTableBtn = d3.select("#filter-btn");
+var resetBtn = d3.select("#reset-btn");
 
 // Select the forms 
 var datetimeForm = d3.select("#datetime");
@@ -44,6 +45,16 @@ cityForm.on("submit", runFilter);
 stateForm.on("submit", runFilter);
 countryForm.on("submit", runFilter);
 shapeForm.on("submit", runFilter);
+resetBtn.on("click", function() {
+    tableData.forEach((element) => {
+        var row = tbody.append("tr");
+        Object.entries(element).forEach(([key,value]) => {
+            row.append("td").text(value);
+        })
+    });;
+  }); 
+
+
 
 // ----------------------------------------------------
 //Event handler function to filter data 
@@ -55,20 +66,28 @@ function runFilter(){
     var inputCountry = countryForm.property("value"); 
     var inputShape = shapeForm.property("value"); 
 
-
+// Filter date and other value. 
     var filteredData = tableData.filter(date => 
-        date.datetime === inputDatetime &&
-        (date.city === inputCity ||
+        date.datetime === inputDatetime || 
+        (date.datetime === inputDatetime &&
+        date.city === inputCity ||
         date.state === inputState ||
         date.country === inputCountry ||
-        date.shape === inputShape)
-        );
-    console.log(filteredData);
+        date.shape === inputShape) ||
 
-    // Rewriting the table to show the next filters applied 
+// Filter with any value. 
+        (date.datetime === inputDatetime || 
+        date.city === inputCity ||
+        date.state === inputState ||
+        date.country === inputCountry ||
+        date.shape === inputShape) 
+
+        );
+
+    //  Table empty to show the next filters applied 
     tbody.html("");
 
-    
+
     filteredData.forEach(function(element) {
         var row = tbody.append("tr");
         Object.entries(element).forEach(([key,value]) => {
@@ -78,3 +97,4 @@ function runFilter(){
     
     
   }
+
